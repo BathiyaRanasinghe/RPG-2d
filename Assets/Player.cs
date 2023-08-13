@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+ 
+   #region Commponenets
    public Animator anim { get; private set;}
    public PlayerStateMachine stateMachine { get; private set; }
-
+   #endregion
+   #region States 
    public PlayerIdleState idleState { get; private set; }
    public PlayerMoveState moveState { get; private set; }
+   #endregion
 
 
    private void Awake() {
