@@ -21,12 +21,26 @@ public class PlayerPrimaryAttackState : PlayerState
             comboCounter = 0;
         }
         player.anim.SetInteger("ComboCounter", comboCounter);
+
+        float attackDir = player.facingDir;
+
+        if(xInput != 0)
+        {
+            attackDir = xInput;
+        }
+
+        player.SetVelocity(player.attackMovement[comboCounter].x * attackDir, player.attackMovement[comboCounter].y);
+
+        stateTimer = 0.1f;
       
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.StartCoroutine("BusyFor", 0.15f);
+
         comboCounter++;
         lastTimeAttacked = Time.time;
     }
@@ -34,6 +48,12 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if(stateTimer < 0)
+        {
+            player.ZeroVelocity();
+        }
+
 
         if(triggerCalled)
         {
